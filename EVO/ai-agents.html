@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents - EvolveOne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 123, 255, 0.3);
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .hamburger-menu {
+            position: relative;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #00d4ff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0px; }
+        .hamburger-icon span:nth-child(2) { top: 8px; }
+        .hamburger-icon span:nth-child(3) { top: 16px; }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 8px;
+        }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 8px;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hamburger-menu.active .menu-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-item {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(0, 123, 255, 0.2);
+            border-color: rgba(0, 123, 255, 0.3);
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: rgba(0, 123, 255, 0.3);
+            margin: 10px 0;
+        }
+
+        .hero {
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Welcome message styles removed */
+
+        .collaboration-model {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 60px;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .model-card {
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.3);
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+
+        .model-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+
+        .model-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .model-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Demo section styles removed */
+
+        .case-studies {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .case-card {
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.3);
+        }
+
+        .case-card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .case-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .metrics {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes scan {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .model-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%);
+            border-top: 1px solid rgba(0, 123, 255, 0.3);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 18px 36px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.4);
+            background: linear-gradient(135deg, #00b8e6 0%, #0088aa 100%);
+        }
+
+        .cta-icon {
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-section p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Small button for main site */
+        .main-site-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 123, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .main-site-btn:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Marquee Slider */
+        .marquee-slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+            color: #fff;
+            padding: 8px 0;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Adjust header position for marquee */
+        .header {
+            top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Marquee Slider -->
+    <div class="marquee-slider">
+        <div class="marquee-content">
+            AI AGENTS • INTELLIGENT AUTOMATION • CUSTOM AI DEVELOPMENT • 24/7 SUPPORT • MULTI-PLATFORM INTEGRATION • AI AGENTS • INTELLIGENT AUTOMATION • CUSTOM AI DEVELOPMENT • 24/7 SUPPORT • MULTI-PLATFORM INTEGRATION
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="EvolveOne Logo.svg" alt="EvolveOne Logo" style="height: 40px; width: auto;">
+            </a>
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                                     <div class="menu-dropdown">
+                         <a href="ai-agents.html" class="menu-item active">AI Agents</a>
+                         <a href="lms-apps.html" class="menu-item">LMS & Apps</a>
+                         <a href="website-design.html" class="menu-item">Website & Design</a>
+                         <a href="marketing-campaigns.html" class="menu-item">Marketing Campaigns</a>
+                     </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Welcome message and main heading/paragraph removed -->
+    </section>
+
+    <!-- Collaboration Model -->
+    <section class="collaboration-model">
+        <h2 class="section-title">AI Agent Integrations</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px; color: rgba(255, 255, 255, 0.9);">
+            Tell us what you want, and we'll create it for you. No confusion, no complexity - just results.
+        </p>
+        <div class="model-grid">
+            <div class="model-card">
+                <div class="model-icon">
+                    <img src="EvolveOne Logo.svg" alt="EvolveOne Logo" style="width: 60px; height: 60px; filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);">
+                </div>
+                <h3>Social Media Integration</h3>
+                <p>X (Twitter), Telegram, WhatsApp - we integrate AI agents across all major social platforms to engage your audience 24/7.</p>
+            </div>
+            <div class="model-card">
+                <div class="model-icon">
+                    <img src="EvolveOne Logo.svg" alt="EvolveOne Logo" style="width: 60px; height: 60px; filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);">
+                </div>
+                <h3>Team Collaboration</h3>
+                <p>Discord, Slack, Microsoft Teams - streamline your team's workflow with intelligent AI assistants that understand your business.</p>
+            </div>
+            <div class="model-card">
+                <div class="model-icon">
+                    <img src="EvolveOne Logo.svg" alt="EvolveOne Logo" style="width: 60px; height: 60px; filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);">
+                </div>
+                <h3>Website Integration</h3>
+                <p>Embed AI agents directly into your website for instant customer support, lead generation, and enhanced user experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Creation Process -->
+    <section class="case-studies">
+        <h2 class="section-title">How We Work</h2>
+        <div class="case-grid">
+            <div class="case-card">
+                <h3>1. You Tell Us What You Want</h3>
+                <p>Describe your business needs, target audience, and desired outcomes. We listen and understand your unique requirements.</p>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Custom Built</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">0%</div>
+                        <div class="metric-label">Confusion</div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-card">
+                <h3>2. We Design & Build</h3>
+                <p>Our experts create your AI agent from scratch, integrating with your chosen platforms and training it on your specific use case.</p>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">Expert</div>
+                        <div class="metric-label">Development</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">Tailored</div>
+                        <div class="metric-label">Solutions</div>
+                    </div>
+                </div>
+            </div>
+            <div class="case-card">
+                <h3>3. You Get Results</h3>
+                <p>Deploy your custom AI agent and start seeing immediate improvements in customer engagement, efficiency, and business growth.</p>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">Ready</div>
+                        <div class="metric-label">To Use</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">24/7</div>
+                        <div class="metric-label">Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Transform Your Business?</h2>
+            <p>Let's discuss how our AI agents can revolutionise your customer engagement and operational efficiency.</p>
+                         <a href="tel:07388110385" class="cta-button">
+                <span class="cta-icon">📞</span>
+                Call Us Today
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Initialize particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Load user data
+        function loadUserData() {
+            const userName = localStorage.getItem('userName');
+            const userHelp = localStorage.getItem('userHelp');
+            
+            if (userName) {
+                document.getElementById('userName').textContent = userName;
+            }
+            if (userHelp) {
+                document.getElementById('userHelp').textContent = userHelp;
+            }
+        }
+
+        // Chat functionality removed
+
+        // Toggle hamburger menu
+        function toggleMenu() {
+            const menu = document.querySelector('.hamburger-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.querySelector('.hamburger-menu');
+            if (!menu.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
