@@ -170,49 +170,7 @@
             line-height: 1.4;
         }
 
-        .layout-preview {
-            width: 100%;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 6px;
-            margin-bottom: 8px;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .layout-preview::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .layout-preview.layout-2::before {
-            width: 50%;
-            height: 2px;
-        }
-
-        .layout-preview.layout-3::before {
-            width: 60%;
-            height: 2px;
-            top: 30%;
-        }
-
-        .layout-preview.layout-4::before {
-            width: 40%;
-            height: 2px;
-            top: 40%;
-        }
-
-        .layout-preview.layout-5::before {
-            width: 80%;
-            height: 2px;
-            top: 60%;
-        }
 
         .cta-options {
             display: grid;
@@ -855,173 +813,7 @@
             }
         }
 
-        /* Preview Modal Styles */
-        .preview-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
 
-        .preview-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .preview-modal {
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 95vw;
-            max-height: 90vh;
-            width: 1400px;
-            height: 800px;
-            position: relative;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .preview-modal-overlay.active .preview-modal {
-            transform: scale(1);
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .preview-title {
-            color: #00d4ff;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .preview-close {
-            background: none;
-            border: none;
-            color: #00d4ff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .preview-close:hover {
-            background: rgba(0, 212, 255, 0.1);
-            transform: scale(1.1);
-        }
-
-        .preview-content {
-            height: calc(100% - 100px);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .preview-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;
-            background: white;
-        }
-
-        .preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 123, 255, 0.1));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-
-        .preview-watermark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 3rem;
-            color: rgba(0, 212, 255, 0.3);
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .preview-actions {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 15;
-        }
-
-        .btn-preview {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #00d4ff, #007bff);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-preview:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-preview.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-preview.secondary:hover {
-            background: rgba(0, 212, 255, 0.1);
-            border-color: #00d4ff;
-        }
-
-        .preview-info {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .preview-info h3 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-        }
-
-        .preview-info p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
@@ -1037,29 +829,19 @@
             
             <div class="layout-options">
                 <div class="layout-option" data-layout="layout1">
-                    <div class="layout-preview layout-1"></div>
                     <h4>Centered Classic</h4>
-                    <p>Clean centered layout with title, tagline, and subtitle</p>
                 </div>
                 <div class="layout-option" data-layout="layout2">
-                    <div class="layout-preview layout-2"></div>
                     <h4>Left Aligned</h4>
-                    <p>Modern left-aligned design with strong visual hierarchy</p>
                 </div>
                 <div class="layout-option" data-layout="layout3">
-                    <div class="layout-preview layout-3"></div>
                     <h4>Split Screen</h4>
-                    <p>Content on left, visual element on right</p>
                 </div>
                 <div class="layout-option" data-layout="layout4">
-                    <div class="layout-preview layout-4"></div>
                     <h4>Minimalist</h4>
-                    <p>Clean and simple with lots of white space</p>
                 </div>
                 <div class="layout-option" data-layout="layout5">
-                    <div class="layout-preview layout-5"></div>
                     <h4>Full Width</h4>
-                    <p>Bold full-width design with large typography</p>
                 </div>
             </div>
             
@@ -1744,15 +1526,15 @@
                 }
             }
             
-            // Save to localStorage for preview
+            // Save to localStorage
             const websiteData = {
                 ...formData,
                 generatedAt: new Date().toISOString()
             };
             localStorage.setItem('generatedWebsite', JSON.stringify(websiteData));
             
-            // Show preview modal
-            showPreviewModal(formData);
+            // Download website immediately
+            downloadWebsite();
         }
 
         function generateHeroHTML(data) {
@@ -2809,59 +2591,7 @@
     </footer>`;
         }
 
-        // Preview Modal Functions
-        function showPreviewModal(data) {
-            // Generate complete website for preview
-            const completeHTML = generateCompleteWebsite(data);
-            
-            // Create modal HTML
-            const modalHTML = `
-                <div class="preview-modal-overlay" id="previewModal">
-                    <div class="preview-modal">
-                        <div class="preview-header">
-                            <div class="preview-title">Website Preview</div>
-                            <button class="preview-close" onclick="closePreviewModal()">&times;</button>
-                        </div>
-                        <div class="preview-content">
-                            <iframe class="preview-iframe" id="previewIframe"></iframe>
-                            <div class="preview-overlay">
-                                <div class="preview-watermark">PREVIEW</div>
-                                <div class="preview-actions">
-                                    <button class="btn-preview secondary" onclick="closePreviewModal()">Back to Builder</button>
-                                    <button class="btn-preview" onclick="downloadWebsite()">Download Website</button>
-                                    <button class="btn-preview" onclick="publishWebsite()" style="background: linear-gradient(135deg, #10b981, #059669);">Publish Website</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
 
-            // Add modal to page if it doesn't exist
-            if (!document.getElementById('previewModal')) {
-                document.body.insertAdjacentHTML('beforeend', modalHTML);
-            }
-
-            // Show modal
-            const modal = document.getElementById('previewModal');
-            modal.classList.add('active');
-
-            // Load complete website in iframe
-            const iframe = document.getElementById('previewIframe');
-            iframe.onload = function() {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                iframeDoc.open();
-                iframeDoc.write(completeHTML);
-                iframeDoc.close();
-            };
-            iframe.src = 'about:blank';
-        }
-
-        function closePreviewModal() {
-            const modal = document.getElementById('previewModal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
 
         function downloadWebsite() {
             const formData = JSON.parse(localStorage.getItem('generatedWebsite'));
@@ -2886,53 +2616,7 @@
             alert('Your website has been downloaded! 🎉\n\nYou can now upload this file to any web hosting service.');
         }
 
-        // Publish website function
-        function publishWebsite() {
-            const formData = JSON.parse(localStorage.getItem('generatedWebsite'));
-            if (!formData) {
-                alert('No website data found. Please build your website first.');
-                return;
-            }
 
-            fetch('/publish-website', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    websiteData: formData
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(`Website published successfully!\n\nYour website is now live at:\n${data.url}\n\nYou can share this link with your customers!`);
-                    closePreviewModal();
-                } else {
-                    alert('Failed to publish website. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error publishing website:', error);
-                alert('Error publishing website. Please try again.');
-            });
-        }
-
-
-
-        // Close modal when clicking outside
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('preview-modal-overlay')) {
-                closePreviewModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closePreviewModal();
-            }
-        });
     </script>
 </body>
 </html>
