@@ -52,6 +52,245 @@
             margin: 0 auto;
         }
 
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+            transition: width 0.3s ease;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Step Navigation */
+        .step-navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .step-dot.active {
+            background: #00d4ff;
+            transform: scale(1.2);
+        }
+
+        .step-dot.completed {
+            background: #10b981;
+        }
+
+        .step-dot:hover {
+            background: rgba(0, 212, 255, 0.5);
+        }
+
+        /* Color Picker */
+        .color-picker-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .color-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .color-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .color-option.selected {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .custom-color-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .custom-color-input input[type="color"] {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .custom-color-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: monospace;
+        }
+
+        /* Auto-save indicator */
+        .auto-save-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .auto-save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Help tooltips */
+        .help-tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 8px;
+            cursor: help;
+        }
+
+        .help-tooltip::after {
+            content: '?';
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .help-tooltip:hover::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+        }
+
+        /* Live preview toggle */
+        .preview-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .preview-toggle:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        .preview-toggle.active {
+            background: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Split screen preview */
+        .preview-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100vh;
+            background: white;
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .preview-panel.show {
+            transform: translateX(0);
+        }
+
+        .preview-panel iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .preview-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         .header {
             margin-bottom: 40px;
         }
@@ -817,9 +1056,35 @@
     </style>
 </head>
 <body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Auto-save indicator -->
+    <div class="auto-save-indicator" id="autoSaveIndicator">
+        <span>✓ Auto-saved</span>
+    </div>
+
+    <!-- Live preview toggle -->
+    <div class="preview-toggle" id="previewToggle" onclick="togglePreview()">
+        👁️ Live Preview
+    </div>
+
+    <!-- Split screen preview -->
+    <div class="preview-panel" id="previewPanel">
+        <button class="preview-close" onclick="togglePreview()">×</button>
+        <iframe id="previewIframe"></iframe>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>EVO Website Builder</h1>
+        </div>
+
+        <!-- Step Navigation -->
+        <div class="step-navigation" id="stepNavigation">
+            <!-- Step dots will be generated by JavaScript -->
         </div>
         
         <!-- Step 1: Layout Selection -->
@@ -848,9 +1113,53 @@
             <button class="btn" onclick="nextStep()" disabled id="next1">Next</button>
         </div>
 
-        <!-- Step 2: Brand Name -->
+        <!-- Step 2: Color Scheme -->
         <div class="step" id="step2">
-            <div class="step-number">Step 2 of 5</div>
+            <div class="step-number">Step 2 of 10</div>
+            <div class="step-question">Choose your website color scheme</div>
+            
+            <div class="color-picker-section">
+                <div class="color-picker-grid">
+                    <div class="color-option" data-color="#667eea" onclick="selectColor('#667eea')">
+                        <div class="color-preview" style="background: #667eea"></div>
+                        <span>Blue Purple</span>
+                    </div>
+                    <div class="color-option" data-color="#10b981" onclick="selectColor('#10b981')">
+                        <div class="color-preview" style="background: #10b981"></div>
+                        <span>Emerald Green</span>
+                    </div>
+                    <div class="color-option" data-color="#f59e0b" onclick="selectColor('#f59e0b')">
+                        <div class="color-preview" style="background: #f59e0b"></div>
+                        <span>Amber Orange</span>
+                    </div>
+                    <div class="color-option" data-color="#ef4444" onclick="selectColor('#ef4444')">
+                        <div class="color-preview" style="background: #ef4444"></div>
+                        <span>Red</span>
+                    </div>
+                    <div class="color-option" data-color="#8b5cf6" onclick="selectColor('#8b5cf6')">
+                        <div class="color-preview" style="background: #8b5cf6"></div>
+                        <span>Purple</span>
+                    </div>
+                    <div class="color-option" data-color="#06b6d4" onclick="selectColor('#06b6d4')">
+                        <div class="color-preview" style="background: #06b6d4"></div>
+                        <span>Cyan</span>
+                    </div>
+                </div>
+                
+                <div class="custom-color-input">
+                    <label>Custom Color:</label>
+                    <input type="color" id="customColor" value="#667eea" onchange="selectCustomColor(this.value)">
+                    <input type="text" id="customColorHex" placeholder="#667eea" onchange="selectCustomColor(this.value)">
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+            <button class="btn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 3: Brand Name -->
+        <div class="step" id="step3">
+            <div class="step-number">Step 3 of 10</div>
             <div class="step-question">What's your brand name?</div>
             
             <div class="form-group">
@@ -862,8 +1171,8 @@
         </div>
 
         <!-- Step 3: Tagline -->
-        <div class="step" id="step3">
-            <div class="step-number">Step 3 of 5</div>
+        <div class="step" id="step4">
+            <div class="step-number">Step 4 of 10</div>
             <div class="step-question">What's your main message?</div>
             
             <div class="form-group">
@@ -875,8 +1184,8 @@
         </div>
 
         <!-- Step 4: Subtagline -->
-        <div class="step" id="step4">
-            <div class="step-number">Step 4 of 5</div>
+        <div class="step" id="step5">
+            <div class="step-number">Step 5 of 10</div>
             <div class="step-question">Additional descriptor or mission statement?</div>
             
             <div class="form-group">
@@ -888,8 +1197,8 @@
         </div>
 
         <!-- Step 5: CTA Button -->
-        <div class="step" id="step5">
-            <div class="step-number">Step 5 of 5</div>
+        <div class="step" id="step6">
+            <div class="step-number">Step 6 of 10</div>
             <div class="step-question">Do you want a call-to-action button?</div>
             
             <div class="form-group">
@@ -919,8 +1228,8 @@
         </div>
 
         <!-- Step 6: About Section -->
-        <div class="step" id="step6">
-            <div class="step-number">Step 6 of 6</div>
+        <div class="step" id="step7">
+            <div class="step-number">Step 7 of 10</div>
             <div class="step-question">Would you like to add an About section?</div>
             
             <div class="form-group">
@@ -961,8 +1270,8 @@
         </div>
 
         <!-- Step 7: Services Section -->
-        <div class="step" id="step7">
-            <div class="step-number">Step 7 of 7</div>
+        <div class="step" id="step8">
+            <div class="step-number">Step 8 of 10</div>
             <div class="step-question">Would you like to add a Services section?</div>
             
             <div class="form-group">
@@ -1001,8 +1310,8 @@
         </div>
 
         <!-- Step 8: Contact Section -->
-        <div class="step" id="step8">
-            <div class="step-number">Step 8 of 9</div>
+        <div class="step" id="step9">
+            <div class="step-number">Step 9 of 10</div>
             <div class="step-question">Would you like to add a Contact section?</div>
             
             <div class="form-group">
@@ -1053,8 +1362,8 @@
         </div>
 
         <!-- Step 9: Social Media & Footer -->
-        <div class="step" id="step9">
-            <div class="step-number">Step 9 of 9</div>
+        <div class="step" id="step10">
+            <div class="step-number">Step 10 of 10</div>
             <div class="step-question">Social Media & Footer Settings</div>
             
             <div class="form-group">
@@ -1127,11 +1436,14 @@
         let currentStep = 1;
         let selectedLayout = '';
         let selectedCta = 'none';
+        let selectedColor = '#667eea';
+        let autoSaveTimer = null;
         let formData = {
             layout: '',
             brandName: '',
             tagline: '',
             subtagline: '',
+            primaryColor: '#667eea',
             ctaType: 'none',
             ctaText: '',
             ctaLink: '',
@@ -1158,6 +1470,224 @@
             footerCopyright: '',
             footerDescription: ''
         };
+
+        // Initialize the builder
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBuilder();
+            loadSavedData();
+            updateProgressBar();
+            generateStepNavigation();
+        });
+
+        // Initialize builder components
+        function initializeBuilder() {
+            // Set default color
+            selectColor('#667eea');
+            
+            // Setup auto-save
+            setupAutoSave();
+        }
+
+        // Progress bar functions
+        function updateProgressBar() {
+            const progress = (currentStep / 10) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Generate step navigation dots
+        function generateStepNavigation() {
+            const navigation = document.getElementById('stepNavigation');
+            navigation.innerHTML = '';
+            
+            for (let i = 1; i <= 10; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'step-dot';
+                dot.onclick = () => goToStep(i);
+                navigation.appendChild(dot);
+            }
+            updateStepNavigation();
+        }
+
+        // Update step navigation
+        function updateStepNavigation() {
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index + 1 === currentStep) {
+                    dot.classList.add('active');
+                } else if (index + 1 < currentStep) {
+                    dot.classList.add('completed');
+                }
+            });
+        }
+
+        // Go to specific step
+        function goToStep(step) {
+            if (step >= 1 && step <= 10) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep = step;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+                updateStepNavigation();
+            }
+        }
+
+        // Color picker functions
+        function selectColor(color) {
+            selectedColor = color;
+            formData.primaryColor = color;
+            
+            // Update UI
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            const selectedOption = document.querySelector(`[data-color="${color}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            // Update custom color inputs
+            document.getElementById('customColor').value = color;
+            document.getElementById('customColorHex').value = color;
+            
+            // Update preview if active
+            if (document.getElementById('previewPanel').classList.contains('show')) {
+                updatePreview();
+            }
+            
+            autoSave();
+        }
+
+        function selectCustomColor(color) {
+            if (color.match(/^#[0-9A-F]{6}$/i)) {
+                selectColor(color);
+            }
+        }
+
+        // Auto-save functions
+        function setupAutoSave() {
+            // Auto-save on any form change
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    clearTimeout(autoSaveTimer);
+                    autoSaveTimer = setTimeout(autoSave, 1000);
+                });
+            });
+        }
+
+        function autoSave() {
+            localStorage.setItem('evoBuilderData', JSON.stringify(formData));
+            showAutoSaveIndicator();
+        }
+
+        function showAutoSaveIndicator() {
+            const indicator = document.getElementById('autoSaveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('evoBuilderData');
+            if (saved) {
+                const savedData = JSON.parse(saved);
+                formData = { ...formData, ...savedData };
+                selectedColor = formData.primaryColor || '#667eea';
+                
+                // Restore form values
+                restoreFormValues();
+            }
+        }
+
+        function restoreFormValues() {
+            // Restore input values
+            if (formData.brandName) document.getElementById('brandName').value = formData.brandName;
+            if (formData.tagline) document.getElementById('tagline').value = formData.tagline;
+            if (formData.subtagline) document.getElementById('subtagline').value = formData.subtagline;
+            if (formData.ctaText) document.getElementById('ctaText').value = formData.ctaText;
+            if (formData.ctaLink) document.getElementById('ctaLink').value = formData.ctaLink;
+            if (formData.aboutTitle) document.getElementById('aboutTitle').value = formData.aboutTitle;
+            if (formData.aboutContent) document.getElementById('aboutContent').value = formData.aboutContent;
+            if (formData.servicesTitle) document.getElementById('servicesTitle').value = formData.servicesTitle;
+            if (formData.contactTitle) document.getElementById('contactTitle').value = formData.contactTitle;
+            if (formData.contactEmail) document.getElementById('contactEmail').value = formData.contactEmail;
+            if (formData.contactPhone) document.getElementById('contactPhone').value = formData.contactPhone;
+            if (formData.contactAddress) document.getElementById('contactAddress').value = formData.contactAddress;
+            if (formData.footerCopyright) document.getElementById('footerCopyright').value = formData.footerCopyright;
+            if (formData.footerDescription) document.getElementById('footerDescription').value = formData.footerDescription;
+            
+            // Restore selections
+            if (formData.layout) {
+                const layoutOption = document.querySelector(`[data-layout="${formData.layout}"]`);
+                if (layoutOption) {
+                    layoutOption.classList.add('selected');
+                    selectedLayout = formData.layout;
+                }
+            }
+            
+            if (formData.ctaType) {
+                const ctaOption = document.querySelector(`[data-cta="${formData.ctaType}"]`);
+                if (ctaOption) {
+                    ctaOption.classList.add('selected');
+                    selectedCta = formData.ctaType;
+                }
+            }
+            
+            if (formData.aboutType) {
+                const aboutOption = document.querySelector(`[data-about="${formData.aboutType}"]`);
+                if (aboutOption) {
+                    aboutOption.classList.add('selected');
+                }
+            }
+            
+            if (formData.servicesType) {
+                const servicesOption = document.querySelector(`[data-services="${formData.servicesType}"]`);
+                if (servicesOption) {
+                    servicesOption.classList.add('selected');
+                }
+            }
+            
+            if (formData.contactType) {
+                const contactOption = document.querySelector(`[data-contact="${formData.contactType}"]`);
+                if (contactOption) {
+                    contactOption.classList.add('selected');
+                }
+            }
+            
+            // Restore color
+            selectColor(selectedColor);
+        }
+
+        // Live preview functions
+        function togglePreview() {
+            const panel = document.getElementById('previewPanel');
+            const toggle = document.getElementById('previewToggle');
+            
+            if (panel.classList.contains('show')) {
+                panel.classList.remove('show');
+                toggle.classList.remove('active');
+            } else {
+                panel.classList.add('show');
+                toggle.classList.add('active');
+                updatePreview();
+            }
+        }
+
+        function updatePreview() {
+            const iframe = document.getElementById('previewIframe');
+            const previewHTML = generateCompleteWebsite(formData);
+            
+            iframe.onload = function() {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.open();
+                iframeDoc.write(previewHTML);
+                iframeDoc.close();
+            };
+            iframe.src = 'about:blank';
+                }
 
         // Layout selection
         document.querySelectorAll('.layout-option').forEach(option => {
@@ -1434,10 +1964,13 @@
         });
 
         function nextStep() {
-            if (currentStep < 9) {
+            if (currentStep < 10) {
                 document.getElementById(`step${currentStep}`).classList.remove('active');
                 currentStep++;
                 document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+                updateStepNavigation();
+                autoSave();
             }
         }
 
@@ -1446,6 +1979,9 @@
                 document.getElementById(`step${currentStep}`).classList.remove('active');
                 currentStep--;
                 document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+                updateStepNavigation();
+                autoSave();
             }
         }
 
@@ -1774,12 +2310,31 @@
 </html>`;
         }
 
+        // Generate secondary color from primary color
+        function generateSecondaryColor(primaryColor) {
+            // Convert hex to HSL, adjust lightness, convert back to hex
+            const hex = primaryColor.replace('#', '');
+            const r = parseInt(hex.substr(0, 2), 16);
+            const g = parseInt(hex.substr(2, 2), 16);
+            const b = parseInt(hex.substr(4, 2), 16);
+            
+            // Simple adjustment - make it slightly darker
+            const factor = 0.8;
+            const newR = Math.round(r * factor);
+            const newG = Math.round(g * factor);
+            const newB = Math.round(b * factor);
+            
+            return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+        }
+
         function generateCompleteWebsite(data) {
             const heroHTML = generateHeroHTML(data);
             const aboutHTML = generateAboutSection(data);
             const servicesHTML = generateServicesSection(data);
             const contactHTML = generateContactSection(data);
             const footerHTML = generateFooter(data);
+            const primaryColor = data.primaryColor || '#667eea';
+            const secondaryColor = generateSecondaryColor(primaryColor);
             
             return `
 <!DOCTYPE html>
@@ -1798,7 +2353,7 @@
         .hamburger:hover span { background: #00d4ff; }
         
         /* Hero Section Styles */
-        .hero-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 120px 20px 80px; text-align: center; position: relative; overflow: hidden; min-height: 60vh; display: flex; align-items: center; justify-content: center; }
+        .hero-section { background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%); color: white; padding: 120px 20px 80px; text-align: center; position: relative; overflow: hidden; min-height: 60vh; display: flex; align-items: center; justify-content: center; }
         .hero-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>'); opacity: 0.3; }
         .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
         .hero-tagline { font-size: 2.5rem; margin-bottom: 20px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3); line-height: 1.2; }
@@ -1845,7 +2400,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
             border-radius: 2px;
         }
         .about-content { 
@@ -1939,7 +2494,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
             border-radius: 2px;
         }
         
@@ -1967,7 +2522,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor});
         }
         .service-card:hover {
             transform: translateY(-10px);
