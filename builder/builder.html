@@ -251,68 +251,29 @@
 </head>
 <body>
     <div class="container">
-                 <div class="header">
-             <h1>EVO Website Builder</h1>
-             <p>Create your perfect website in seconds</p>
-             <div class="subtitle">Select one of the following</div>
-         </div>
+        <div class="header">
+            <h1>EVO Website Builder</h1>
+            <p>Create your perfect website in seconds</p>
+        </div>
 
-         <div class="options-grid">
-             <div class="option-card" onclick="selectTemplate('event-essentials')">
-                 <h3>Event Essentials</h3>
-                 <p>Perfect for events, conferences, weddings, and special occasions</p>
-             </div>
-             <div class="option-card" onclick="selectTemplate('professionals')">
-                 <h3>Professionals</h3>
-                 <p>Doctors, Therapists, Counsellors, Trainers and Coaches</p>
-             </div>
-                           <div class="option-card" onclick="selectTemplate('sports')">
-                  <h3>Sports</h3>
-                  <p>Clubs, Academies and Teams</p>
-              </div>
-             <div class="option-card" onclick="selectTemplate('personal')">
-                 <h3>Personal</h3>
-                 <p>Online CVs, Portfolios, Showcases</p>
-             </div>
-         </div>
-
-                   <div class="evo-card">
-              <div class="evo-card-content">
-                  <p class="coming-soon">COMING SOON</p>
-                  <div class="evo-logo">
-                      <img src="../evolveone logo.svg" alt="EVO Logo" class="evo-logo-img">
-                  </div>
-                  <h3>Speak to EVO</h3>
-                  <div class="evo-tagline">
-                      <span>You Describe.</span>
-                      <span>EVO Creates.</span>
-                  </div>
-              </div>
-          </div>
+        <div class="evo-card" onclick="goToBuilder()">
+            <div class="evo-card-content">
+                <div class="evo-logo">
+                    <img src="../evolveone logo.svg" alt="EVO Logo" class="evo-logo-img">
+                </div>
+                <h3>Start Building</h3>
+                <div class="evo-tagline">
+                    <span>Create Your Hero Section</span>
+                    <span>In Minutes</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-         <script>
-         function selectTemplate(template) {
-             switch(template) {
-                 case 'event-essentials':
-                     window.location.href = 'event-essentials-builder.html';
-                     break;
-                 case 'professionals':
-                     window.location.href = 'professionals-builder.html';
-                     break;
-                 case 'sports':
-                     window.location.href = 'sports-builder.html';
-                     break;
-                 case 'personal':
-                     window.location.href = 'personal-builder.html';
-                     break;
-             }
-         }
-
-         // Add click handler for EVO card
-         document.querySelector('.evo-card').addEventListener('click', function() {
-             alert('Speak to EVO feature coming soon! You Describe. EVO Creates.');
-         });
-     </script>
+    <script>
+        function goToBuilder() {
+            window.location.href = 'central-builder.html';
+        }
+    </script>
 </body>
 </html>

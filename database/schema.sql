@@ -162,12 +162,25 @@ CREATE POLICY "Public websites are viewable by everyone" ON websites
 CREATE POLICY "Anyone can create a website" ON websites
     FOR INSERT WITH CHECK (true);
 
+CREATE POLICY "Anyone can update their own website" ON websites
+    FOR UPDATE USING (true);
+
 CREATE POLICY "Anyone can submit contact forms" ON form_submissions
     FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Anyone can read contact forms" ON form_submissions
+    FOR SELECT USING (true);
 
 -- Create policies for template access
 CREATE POLICY "Templates are viewable by everyone" ON templates
     FOR SELECT USING (is_active = true);
+
+-- Create policies for analytics
+CREATE POLICY "Anyone can insert analytics" ON website_analytics
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Anyone can update analytics" ON website_analytics
+    FOR UPDATE USING (true);
 
 -- Create a view for website statistics
 CREATE VIEW website_stats AS
