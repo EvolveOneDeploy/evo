@@ -164,7 +164,8 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             padding: 30px;
-            min-height: 400px;
+            min-height: 600px;
+            overflow: hidden;
         }
 
         .btn {
@@ -200,6 +201,15 @@
             margin-top: 30px;
         }
 
+        /* Dynamic form sections */
+        .dynamic-section {
+            display: none;
+        }
+
+        .dynamic-section.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -224,7 +234,7 @@
     <div class="container">
         <div class="header">
             <h1>👨‍⚕️ Professionals Website Builder</h1>
-            <p>Create a professional website for doctors, therapists, counsellors, trainers and coaches</p>
+            <p>Create a professional website tailored to your specific profession</p>
         </div>
 
         <form class="builder-form" id="professionalsForm">
@@ -237,7 +247,7 @@
                 </div>
                 <div class="form-group">
                     <label for="profession">Profession</label>
-                    <select id="profession" name="profession">
+                    <select id="profession" name="profession" onchange="showProfessionSpecificFields()">
                         <option value="">Select your profession</option>
                         <option value="doctor">Doctor/Physician</option>
                         <option value="therapist">Therapist</option>
@@ -265,51 +275,28 @@
                 </div>
             </div>
 
-            <!-- Services -->
-            <div class="form-section">
-                <h3>🩺 Services Offered</h3>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="consultations" name="services" value="consultations">
-                        <label for="consultations">Initial Consultations</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="ongoing" name="services" value="ongoing">
-                        <label for="ongoing">Ongoing Treatment/Sessions</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="emergency" name="services" value="emergency">
-                        <label for="emergency">Emergency Services</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="telehealth" name="services" value="telehealth">
-                        <label for="telehealth">Telehealth/Online Sessions</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="group" name="services" value="group">
-                        <label for="group">Group Sessions</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="workshops" name="services" value="workshops">
-                        <label for="workshops">Workshops & Seminars</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="assessments" name="services" value="assessments">
-                        <label for="assessments">Assessments & Evaluations</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="followup" name="services" value="followup">
-                        <label for="followup">Follow-up Care</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Practice Information -->
-            <div class="form-section">
-                <h3>🏥 Practice Information</h3>
+            <!-- Doctor Specific -->
+            <div class="form-section dynamic-section" id="doctor-section">
+                <h3>🏥 Medical Practice Information</h3>
                 <div class="form-group">
-                    <label for="practiceName">Practice/Clinic Name</label>
-                    <input type="text" id="practiceName" name="practiceName" placeholder="Your practice name">
+                    <label for="practiceName">Practice/Hospital Name</label>
+                    <input type="text" id="practiceName" name="practiceName" placeholder="Your practice or hospital name">
+                </div>
+                <div class="form-group">
+                    <label for="medicalSpecialty">Medical Specialty</label>
+                    <select id="medicalSpecialty" name="medicalSpecialty">
+                        <option value="">Select specialty</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="psychiatry">Psychiatry</option>
+                        <option value="surgery">Surgery</option>
+                        <option value="internal-medicine">Internal Medicine</option>
+                        <option value="family-medicine">Family Medicine</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="address">Practice Address</label>
@@ -322,6 +309,124 @@
                 <div class="form-group">
                     <label for="insurance">Insurance Accepted</label>
                     <textarea id="insurance" name="insurance" rows="3" placeholder="List accepted insurance providers"></textarea>
+                </div>
+            </div>
+
+            <!-- Personal Trainer Specific -->
+            <div class="form-section dynamic-section" id="trainer-section">
+                <h3>💪 Training Information</h3>
+                <div class="form-group">
+                    <label for="trainingSpecialty">Training Specialty</label>
+                    <select id="trainingSpecialty" name="trainingSpecialty">
+                        <option value="">Select specialty</option>
+                        <option value="strength">Strength Training</option>
+                        <option value="cardio">Cardiovascular Fitness</option>
+                        <option value="weight-loss">Weight Loss</option>
+                        <option value="muscle-building">Muscle Building</option>
+                        <option value="sports-specific">Sports Specific</option>
+                        <option value="senior-fitness">Senior Fitness</option>
+                        <option value="rehabilitation">Rehabilitation</option>
+                        <option value="nutrition">Nutrition Coaching</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="certifications">Certifications</label>
+                    <textarea id="certifications" name="certifications" rows="3" placeholder="List your fitness certifications and qualifications"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="trainingLocation">Training Location</label>
+                    <select id="trainingLocation" name="trainingLocation">
+                        <option value="">Select location type</option>
+                        <option value="gym">Gym</option>
+                        <option value="home-visits">Home Visits</option>
+                        <option value="outdoor">Outdoor Training</option>
+                        <option value="online">Online Training</option>
+                        <option value="studio">Private Studio</option>
+                        <option value="multiple">Multiple Locations</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sessionTypes">Session Types</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="one-on-one" name="sessionTypes" value="one-on-one">
+                            <label for="one-on-one">One-on-One Sessions</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="group-classes" name="sessionTypes" value="group-classes">
+                            <label for="group-classes">Group Classes</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="online-coaching" name="sessionTypes" value="online-coaching">
+                            <label for="online-coaching">Online Coaching</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nutrition-plans" name="sessionTypes" value="nutrition-plans">
+                            <label for="nutrition-plans">Nutrition Plans</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Therapist/Counsellor Specific -->
+            <div class="form-section dynamic-section" id="therapist-section">
+                <h3>🧠 Therapy Practice Information</h3>
+                <div class="form-group">
+                    <label for="therapyApproach">Therapeutic Approach</label>
+                    <select id="therapyApproach" name="therapyApproach">
+                        <option value="">Select approach</option>
+                        <option value="cbt">Cognitive Behavioral Therapy (CBT)</option>
+                        <option value="psychodynamic">Psychodynamic Therapy</option>
+                        <option value="humanistic">Humanistic Therapy</option>
+                        <option value="family">Family Therapy</option>
+                        <option value="couples">Couples Therapy</option>
+                        <option value="trauma">Trauma-Informed Therapy</option>
+                        <option value="mindfulness">Mindfulness-Based Therapy</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="clientFocus">Client Focus</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="adults" name="clientFocus" value="adults">
+                            <label for="adults">Adults</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="teens" name="clientFocus" value="teens">
+                            <label for="teens">Teens</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="children" name="clientFocus" value="children">
+                            <label for="children">Children</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="couples" name="clientFocus" value="couples">
+                            <label for="couples">Couples</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="families" name="clientFocus" value="families">
+                            <label for="families">Families</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sessionFormat">Session Format</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="in-person" name="sessionFormat" value="in-person">
+                            <label for="in-person">In-Person Sessions</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="online-therapy" name="sessionFormat" value="online-therapy">
+                            <label for="online-therapy">Online Therapy</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="phone" name="sessionFormat" value="phone">
+                            <label for="phone">Phone Sessions</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -390,6 +495,27 @@
     </div>
 
     <script>
+        // Show profession-specific fields
+        function showProfessionSpecificFields() {
+            const profession = document.getElementById('profession').value;
+            
+            // Hide all dynamic sections
+            document.querySelectorAll('.dynamic-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show relevant section
+            if (profession === 'doctor' || profession === 'dentist' || profession === 'chiropractor') {
+                document.getElementById('doctor-section').classList.add('active');
+            } else if (profession === 'trainer') {
+                document.getElementById('trainer-section').classList.add('active');
+            } else if (profession === 'therapist' || profession === 'counsellor' || profession === 'psychologist') {
+                document.getElementById('therapist-section').classList.add('active');
+            }
+            
+            updatePreview();
+        }
+
         // Real-time preview updates
         document.getElementById('professionalsForm').addEventListener('input', function() {
             updatePreview();
@@ -402,23 +528,84 @@
             const tagline = document.getElementById('tagline').value || 'Professional Care & Support';
             const description = document.getElementById('description').value || 'Dedicated to providing exceptional care and support to help you achieve your health and wellness goals.';
             
+            // Get profession-specific data
+            const practiceName = document.getElementById('practiceName')?.value || '';
+            const medicalSpecialty = document.getElementById('medicalSpecialty')?.value || '';
+            const trainingSpecialty = document.getElementById('trainingSpecialty')?.value || '';
+            const therapyApproach = document.getElementById('therapyApproach')?.value || '';
+            
             const selectedServices = Array.from(document.querySelectorAll('input[name="services"]:checked'))
                 .map(cb => cb.nextElementSibling.textContent);
+            const selectedSessionTypes = Array.from(document.querySelectorAll('input[name="sessionTypes"]:checked'))
+                .map(cb => cb.nextElementSibling.textContent);
+            const selectedClientFocus = Array.from(document.querySelectorAll('input[name="clientFocus"]:checked'))
+                .map(cb => cb.nextElementSibling.textContent);
 
+            // Create a realistic website preview
             const previewHTML = `
-                <div style="max-width: 600px; margin: 0 auto;">
-                    <h1 style="color: #00bcd4; font-size: 2.5rem; margin-bottom: 10px;">${professionalName}</h1>
-                    <h2 style="color: #4caf50; font-size: 1.5rem; margin-bottom: 10px;">${profession.charAt(0).toUpperCase() + profession.slice(1)}</h2>
-                    <h3 style="color: #2196f3; font-size: 1.2rem; margin-bottom: 20px;">${specialization}</h3>
-                    <p style="color: #00bcd4; font-style: italic; margin-bottom: 20px;">"${tagline}"</p>
-                    <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 30px;">${description}</p>
-                    
-                    ${selectedServices.length > 0 ? `
-                        <h3 style="color: #00bcd4; margin-bottom: 15px;">🩺 Services Offered</h3>
-                        <ul style="color: rgba(255, 255, 255, 0.7);">
-                            ${selectedServices.map(service => `<li>${service}</li>`).join('')}
-                        </ul>
+                <div style="max-width: 800px; margin: 0 auto; font-family: 'Segoe UI', sans-serif;">
+                    <!-- Header -->
+                    <div style="background: linear-gradient(135deg, #00bcd4, #4caf50); padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
+                        <h1 style="color: white; font-size: 2.5rem; margin-bottom: 10px;">${professionalName}</h1>
+                        <p style="color: white; font-size: 1.2rem; margin-bottom: 5px;">${profession.charAt(0).toUpperCase() + profession.slice(1)}</p>
+                        ${specialization ? `<p style="color: rgba(255,255,255,0.9); font-size: 1rem;">${specialization}</p>` : ''}
+                    </div>
+
+                    <!-- Tagline -->
+                    ${tagline ? `<div style="text-align: center; margin-bottom: 30px;">
+                        <h2 style="color: #00bcd4; font-size: 1.8rem; font-style: italic;">"${tagline}"</h2>
+                    </div>` : ''}
+
+                    <!-- About Section -->
+                    <div style="background: rgba(0, 150, 136, 0.1); padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #00bcd4;">
+                        <h3 style="color: #00bcd4; margin-bottom: 15px; font-size: 1.5rem;">About Me</h3>
+                        <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.6;">${description}</p>
+                    </div>
+
+                    <!-- Profession-specific sections -->
+                    ${practiceName ? `
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #4caf50;">
+                            <h3 style="color: #4caf50; margin-bottom: 15px; font-size: 1.5rem;">🏥 Practice Information</h3>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;"><strong>Practice:</strong> ${practiceName}</p>
+                            ${medicalSpecialty ? `<p style="color: rgba(255, 255, 255, 0.9);"><strong>Specialty:</strong> ${medicalSpecialty}</p>` : ''}
+                        </div>
                     ` : ''}
+
+                    ${trainingSpecialty ? `
+                        <div style="background: rgba(255, 193, 7, 0.1); padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #ffc107;">
+                            <h3 style="color: #ffc107; margin-bottom: 15px; font-size: 1.5rem;">💪 Training Focus</h3>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;"><strong>Specialty:</strong> ${trainingSpecialty}</p>
+                            ${selectedSessionTypes.length > 0 ? `
+                                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;"><strong>Services:</strong></p>
+                                <ul style="color: rgba(255, 255, 255, 0.8); margin-left: 20px;">
+                                    ${selectedSessionTypes.map(service => `<li>${service}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    ${therapyApproach ? `
+                        <div style="background: rgba(156, 39, 176, 0.1); padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #9c27b0;">
+                            <h3 style="color: #9c27b0; margin-bottom: 15px; font-size: 1.5rem;">🧠 Therapeutic Approach</h3>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;"><strong>Approach:</strong> ${therapyApproach}</p>
+                            ${selectedClientFocus.length > 0 ? `
+                                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;"><strong>Client Focus:</strong></p>
+                                <ul style="color: rgba(255, 255, 255, 0.8); margin-left: 20px;">
+                                    ${selectedClientFocus.map(focus => `<li>${focus}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    <!-- Contact Section -->
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 25px; border-radius: 10px; border-left: 4px solid #2196f3;">
+                        <h3 style="color: #2196f3; margin-bottom: 15px; font-size: 1.5rem;">📞 Get In Touch</h3>
+                        <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 10px;">Ready to start your journey? Contact me today for a consultation.</p>
+                        <div style="display: flex; gap: 20px; margin-top: 15px;">
+                            <button style="background: #00bcd4; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Book Consultation</button>
+                            <button style="background: transparent; color: #00bcd4; border: 2px solid #00bcd4; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Learn More</button>
+                        </div>
+                    </div>
                 </div>
             `;
             
@@ -432,6 +619,8 @@
             
             // Add selected services
             data.services = Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value);
+            data.sessionTypes = Array.from(document.querySelectorAll('input[name="sessionTypes"]:checked')).map(cb => cb.value);
+            data.clientFocus = Array.from(document.querySelectorAll('input[name="clientFocus"]:checked')).map(cb => cb.value);
             
             // Store in localStorage for the generated website
             localStorage.setItem('professionalsWebsiteData', JSON.stringify(data));
@@ -449,6 +638,8 @@
             const formData = new FormData(document.getElementById('professionalsForm'));
             const data = Object.fromEntries(formData);
             data.services = Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value);
+            data.sessionTypes = Array.from(document.querySelectorAll('input[name="sessionTypes"]:checked')).map(cb => cb.value);
+            data.clientFocus = Array.from(document.querySelectorAll('input[name="clientFocus"]:checked')).map(cb => cb.value);
             
             localStorage.setItem('professionalsBuilderProgress', JSON.stringify(data));
             alert('Progress saved! You can continue later.');
@@ -472,6 +663,7 @@
                     }
                 });
                 
+                showProfessionSpecificFields();
                 updatePreview();
             }
         });
