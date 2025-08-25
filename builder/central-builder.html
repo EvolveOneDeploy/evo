@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVO Website Builder - Central</title>
-    <script src="https://js.stripe.com/v3/"></script>
+
     <style>
         * {
             margin: 0;
@@ -2863,88 +2863,27 @@
             }
         }
 
-        function unlockFullWebsite() {
-            // Initialize Stripe
-            const stripe = Stripe('pk_live_51RzzpMQdDyDlVLsyylWzOt3lCdTQVxH5MewtCgPnqB26Idw5cVypkDH2UVPJPCNEASjEmlXPn3My9fh2QgujLH7X00f9V9Jw2d');
-            
-            // Create payment session
-            fetch('/create-payment-session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    amount: 8800, // £88.00 in pence
-                    currency: 'gbp',
-                    description: 'EVO Website Builder - Complete Website',
-                    success_url: window.location.href + '?payment=success',
-                    cancel_url: window.location.href + '?payment=cancelled'
-                })
-            })
-            .then(response => response.json())
-            .then(session => {
-                return stripe.redirectToCheckout({
-                    sessionId: session.id
-                });
-            })
-            .then(result => {
-                if (result.error) {
-                    alert('Payment failed: ' + result.error.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Payment processing error. Please try again.');
-            });
-        }
-
-        // Handle payment success
-        function handlePaymentSuccess() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('payment') === 'success') {
-                // Verify payment with server
-                fetch('/verify-payment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        session_id: urlParams.get('session_id')
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.verified) {
-                        // Generate and download the complete website
-                        const formData = JSON.parse(localStorage.getItem('generatedWebsite'));
-                        if (formData) {
-                            const completeHTML = generateCompleteWebsite(formData);
-                            
-                            // Create download link
-                            const blob = new Blob([completeHTML], { type: 'text/html' });
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = `${formData.brandName.replace(/\s+/g, '-').toLowerCase()}-website.html`;
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a);
-                            URL.revokeObjectURL(url);
-                            
-                            // Clear URL parameters
-                            window.history.replaceState({}, document.title, window.location.pathname);
-                            
-                            alert('Payment successful! Your complete website has been downloaded! 🎉\n\nYou can now upload this file to any web hosting service.');
-                        }
-                    } else {
-                        alert('Payment verification failed. Please contact support.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Payment verification error:', error);
-                    alert('Payment verification failed. Please contact support.');
-                });
+        function downloadWebsite() {
+            const formData = JSON.parse(localStorage.getItem('generatedWebsite'));
+            if (!formData) {
+                alert('No website data found. Please build your website first.');
+                return;
             }
+
+            const completeHTML = generateCompleteWebsite(formData);
+            
+            // Create download link
+            const blob = new Blob([completeHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${formData.brandName.replace(/\s+/g, '-').toLowerCase()}-website.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Your website has been downloaded! 🎉\n\nYou can now upload this file to any web hosting service.');
         }
 
         // Publish website function
@@ -2979,10 +2918,7 @@
             });
         }
 
-        // Check for payment success on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            handlePaymentSuccess();
-        });
+
 
         // Close modal when clicking outside
         document.addEventListener('click', function(event) {
