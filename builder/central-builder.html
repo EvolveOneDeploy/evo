@@ -999,7 +999,7 @@
                     </div>
                     <div class="service-option" data-services="list">
                         <h4>List Layout</h4>
-                        <p>Simple list with icons</p>
+                        <p>Simple list layout</p>
                     </div>
                     <div class="service-option" data-services="carousel">
                         <h4>Carousel Layout</h4>
@@ -1324,8 +1324,7 @@
             const service = {
                 id: serviceId,
                 title: '',
-                description: '',
-                icon: '💼'
+                description: ''
             };
             
             formData.services.push(service);
@@ -1358,7 +1357,6 @@
                     </div>
                     <div class="service-inputs">
                         <input type="text" placeholder="Service title" value="${service.title}" onchange="updateService(${service.id}, 'title', this.value)">
-                        <input type="text" placeholder="Icon (emoji or text)" value="${service.icon}" onchange="updateService(${service.id}, 'icon', this.value)">
                         <textarea placeholder="Service description" onchange="updateService(${service.id}, 'description', this.value)">${service.description}</textarea>
                     </div>
                 `;
@@ -1441,8 +1439,7 @@
                             formData.services = websiteData.services.map((service, index) => ({
                                 id: Date.now() + index,
                                 title: service.title || '',
-                                description: service.description || '',
-                                icon: service.icon || '💼'
+                                description: service.description || ''
                             }));
                         }
                         
@@ -2585,14 +2582,12 @@
                     case 'grid':
                         return `
                             <div class="service-card">
-                                <span class="service-icon">${service.icon}</span>
                                 <h3>${service.title}</h3>
                                 <p>${service.description}</p>
                             </div>`;
                     case 'list':
                         return `
                             <div class="service-item-list">
-                                <span class="service-icon-list">${service.icon}</span>
                                 <div class="service-content-list">
                                     <h3>${service.title}</h3>
                                     <p>${service.description}</p>
@@ -2601,7 +2596,6 @@
                     case 'carousel':
                         return `
                             <div class="carousel-item">
-                                <span class="service-icon">${service.icon}</span>
                                 <h3>${service.title}</h3>
                                 <p>${service.description}</p>
                             </div>`;
@@ -2701,19 +2695,23 @@
             const socialLinks = [];
             
             if (data.socialX && data.socialXLink) {
-                socialLinks.push(`<a href="${data.socialXLink}" class="social-link" target="_blank" title="X (Twitter)">X</a>`);
+                const xLink = data.socialXLink.startsWith('http') ? data.socialXLink : `https://${data.socialXLink}`;
+                socialLinks.push(`<a href="${xLink}" class="social-link" target="_blank" title="X (Twitter)">X</a>`);
             }
             
             if (data.socialFacebook && data.socialFacebookLink) {
-                socialLinks.push(`<a href="${data.socialFacebookLink}" class="social-link" target="_blank" title="Facebook">FB</a>`);
+                const fbLink = data.socialFacebookLink.startsWith('http') ? data.socialFacebookLink : `https://${data.socialFacebookLink}`;
+                socialLinks.push(`<a href="${fbLink}" class="social-link" target="_blank" title="Facebook">FB</a>`);
             }
             
             if (data.socialInstagram && data.socialInstagramLink) {
-                socialLinks.push(`<a href="${data.socialInstagramLink}" class="social-link" target="_blank" title="Instagram">IG</a>`);
+                const igLink = data.socialInstagramLink.startsWith('http') ? data.socialInstagramLink : `https://${data.socialInstagramLink}`;
+                socialLinks.push(`<a href="${igLink}" class="social-link" target="_blank" title="Instagram">IG</a>`);
             }
             
             if (data.socialLinkedIn && data.socialLinkedInLink) {
-                socialLinks.push(`<a href="${data.socialLinkedInLink}" class="social-link" target="_blank" title="LinkedIn">IN</a>`);
+                const liLink = data.socialLinkedInLink.startsWith('http') ? data.socialLinkedInLink : `https://${data.socialLinkedInLink}`;
+                socialLinks.push(`<a href="${liLink}" class="social-link" target="_blank" title="LinkedIn">IN</a>`);
             }
             
             const footerCopyright = data.footerCopyright || `© ${data.brandName} 2025 - Created by Evolve`;
